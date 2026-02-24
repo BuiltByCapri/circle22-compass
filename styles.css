@@ -172,6 +172,8 @@ h1 {
     transition: all 0.3s;
     font-size: 16px;
     color: #05081C;
+    display: block;
+    width: 100%;
 }
 
 .answer-option:hover {
