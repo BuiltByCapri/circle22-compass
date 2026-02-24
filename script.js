@@ -209,7 +209,30 @@ function calculateResults() {
     };
     
     // Send to Google Sheets
-    sendToGoogleSheets(scores);
+async function sendToGoogleSheets(scores) {
+    const url = 'https://script.google.com/macros/s/AKfycbxBRyLd0K97SDBZlWdrDo5IFWc3uofwiOLeW5yCHcgyyg-rXWsbO4LodgbAKuFtpHzfTg/exec;' // Replace with your actual URL
+    
+    const payload = {
+        email: userEmail,
+        responses: responses,
+        scores: scores
+    };
+    
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        });
+        
+        console.log('Data sent to Google Sheets successfully');
+    } catch (error) {
+        console.error('Error sending to Google Sheets:', error);
+    }
+}
     
     // Show results
     showResults(scores);
