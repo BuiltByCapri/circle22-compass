@@ -62,7 +62,15 @@ function renderSingleChoice(question) {
     question.options.forEach(option => {
         const div = document.createElement('div');
         div.className = 'answer-option';
-        div.textContent = option.text;
+        
+        // Add letter prefix
+        const letter = document.createElement('strong');
+        letter.textContent = option.value + ') ';
+        letter.style.marginRight = '8px';
+        letter.style.color = '#8B2E2E';
+        
+        div.appendChild(letter);
+        div.appendChild(document.createTextNode(option.text));
         div.dataset.value = option.value;
         
         // Check if already selected
@@ -87,12 +95,19 @@ function renderSingleChoice(question) {
 // Render Multiple Choice
 function renderMultipleChoice(question) {
     const maxSelections = question.maxSelections || 2;
-    const selectedCount = responses[question.id] ? responses[question.id].length : 0;
     
     question.options.forEach(option => {
         const div = document.createElement('div');
         div.className = 'answer-option checkbox';
-        div.textContent = option.text;
+        
+        // Add letter prefix
+        const letter = document.createElement('strong');
+        letter.textContent = option.value + ') ';
+        letter.style.marginRight = '8px';
+        letter.style.color = '#8B2E2E';
+        
+        div.appendChild(letter);
+        div.appendChild(document.createTextNode(option.text));
         div.dataset.value = option.value;
         
         // Check if already selected
@@ -214,6 +229,9 @@ function showResults(scores) {
     questionPage.classList.remove('active');
     resultsPage.classList.add('active');
     
+    // Scroll to top
+    window.scrollTo(0, 0);
+    
     // Animate bars
     setTimeout(() => {
         document.getElementById('needle-bar').style.width = scores.needle + '%';
@@ -223,10 +241,10 @@ function showResults(scores) {
     }, 300);
     
     // Update score text
-    document.getElementById('needle-score').textContent = scores.needle + '%';
-    document.getElementById('rose-score').textContent = scores.rose + '%';
-    document.getElementById('bearing-score').textContent = scores.bearing + '%';
-    document.getElementById('anchor-score').textContent = scores.anchor + '%';
+    document.getElementById('needle-score').textContent = scores.needle + '% - ' + getNeedleLabel(scores.needle);
+    document.getElementById('rose-score').textContent = scores.rose + '% - ' + getRoseLabel(scores.rose);
+    document.getElementById('bearing-score').textContent = scores.bearing + '% - ' + getBearingLabel(scores.bearing);
+    document.getElementById('anchor-score').textContent = scores.anchor + '% - ' + getAnchorLabel(scores.anchor);
     
     // Generate insights
     const insights = generateInsights(scores);
@@ -236,18 +254,43 @@ function showResults(scores) {
     drawCompassRose(scores);
 }
 
+// Score Labels (placeholder - you can customize these)
+function getNeedleLabel(score) {
+    if (score >= 80) return "Direct & Authentic";
+    if (score >= 60) return "Warm & Gradual";
+    return "Adaptable & Light";
+}
+
+function getRoseLabel(score) {
+    if (score >= 80) return "Energetic & Dynamic";
+    if (score >= 60) return "Steady & Flowing";
+    return "Slow & Spacious";
+}
+
+function getBearingLabel(score) {
+    if (score >= 80) return "Depth & Curiosity";
+    if (score >= 60) return "Warmth & Ease";
+    return "Confidence & Presence";
+}
+
+function getAnchorLabel(score) {
+    if (score >= 80) return "Intentional & Direct";
+    if (score >= 60) return "Patient & Curious";
+    return "Gentle & Organic";
+}
+
 // Generate Insights
 function generateInsights(scores) {
     const highest = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
     
     const insights = {
-        needle: "You connect best with people who appreciate your authentic presence and communication style.",
-        rose: "You're energized by connections that match your natural rhythm and tempo.",
-        bearing: "You're drawn to depth and authenticity in the people you meet.",
-        anchor: "You build connection through consistency and showing up with intention."
+        needle: "You connect best with people who appreciate your authentic presence and communication style. Your directness creates clarity, and people feel they know where they stand with you.",
+        rose: "You're energized by connections that match your natural rhythm and tempo. When someone flows at your pace, you feel seen and understood in a way that matters.",
+        bearing: "You're drawn to depth and authenticity in the people you meet. Surface-level interactions don't satisfy you—you're looking for something real, something that resonates.",
+        anchor: "You build connection through consistency and showing up with intention. Trust matters to you, and you create it by being reliable and present over time."
     };
     
-    return insights[highest] + " Your Compass shows you value genuine connection over surface-level interaction.";
+    return insights[highest];
 }
 
 // Draw Compass Rose
@@ -261,7 +304,7 @@ function drawCompassRose(scores) {
     // Clear canvas
     ctx.clearRect(0, 0, 300, 300);
     
-    // Draw circles
+    // Draw circles (background grid)
     ctx.strokeStyle = '#d4cfc4';
     ctx.lineWidth = 1;
     for (let i = 1; i <= 4; i++) {
@@ -301,31 +344,9 @@ function drawCompassRose(scores) {
     const bearingRadius = (scores.bearing / 100) * maxRadius;
     const anchorRadius = (scores.anchor / 100) * maxRadius;
     
-    ctx.fillStyle = '#8B2E2E';
-    
-    // North (Needle)
-    ctx.beginPath();
-    ctx.arc(centerX, centerY - needleRadius, 6, 0, Math.PI * 2);
-    ctx.fill();
-    
-    // East (Rose)
-    ctx.beginPath();
-    ctx.arc(centerX + roseRadius, centerY, 6, 0, Math.PI * 2);
-    ctx.fill();
-    
-    // South (Bearing)
-    ctx.beginPath();
-    ctx.arc(centerX, centerY + bearingRadius, 6, 0, Math.PI * 2);
-    ctx.fill();
-    
-    // West (Anchor)
-    ctx.beginPath();
-    ctx.arc(centerX - anchorRadius, centerY, 6, 0, Math.PI * 2);
-    ctx.fill();
-    
-    // Connect the dots
+    // Connect the dots (background shape)
     ctx.strokeStyle = 'rgba(139, 46, 46, 0.3)';
-    ctx.lineWidth = 1;
+    ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(centerX, centerY - needleRadius);
     ctx.lineTo(centerX + roseRadius, centerY);
@@ -334,7 +355,36 @@ function drawCompassRose(scores) {
     ctx.closePath();
     ctx.stroke();
     
-    ctx.fillStyle = 'rgba(139, 46, 46, 0.1)';
+    ctx.fillStyle = 'rgba(139, 46, 46, 0.15)';
+    ctx.fill();
+    
+    // Draw score points
+    ctx.fillStyle = '#8B2E2E';
+    
+    // North (Needle)
+    ctx.beginPath();
+    ctx.arc(centerX, centerY - needleRadius, 8, 0, Math.PI * 2);
+    ctx.fill();
+    
+    // East (Rose)
+    ctx.beginPath();
+    ctx.arc(centerX + roseRadius, centerY, 8, 0, Math.PI * 2);
+    ctx.fill();
+    
+    // South (Bearing)
+    ctx.beginPath();
+    ctx.arc(centerX, centerY + bearingRadius, 8, 0, Math.PI * 2);
+    ctx.fill();
+    
+    // West (Anchor)
+    ctx.beginPath();
+    ctx.arc(centerX - anchorRadius, centerY, 8, 0, Math.PI * 2);
+    ctx.fill();
+    
+    // Center point
+    ctx.fillStyle = '#EFBF04';
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, 6, 0, Math.PI * 2);
     ctx.fill();
 }
 
