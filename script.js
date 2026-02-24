@@ -396,6 +396,49 @@ function drawCompassRose(scores) {
 }
 
 // Download Results Card
-document.getElementById('download-btn').addEventListener('click', () => {
-    alert('Download feature coming soon! For now, take a screenshot of your results.');
+document.getElementById('download-btn').addEventListener('click', async () => {
+    const button = document.getElementById('download-btn');
+    button.textContent = 'Generating...';
+    button.disabled = true;
+    
+    try {
+        // Use html2canvas to capture the results
+        const resultsContainer = document.querySelector('#results-page .container');
+        
+        // Temporarily hide the download button
+        button.style.display = 'none';
+        
+        // Import html2canvas from CDN
+        if (!window.html2canvas) {
+            const script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+            document.head.appendChild(script);
+            
+            await new Promise((resolve) => {
+                script.onload = resolve;
+            });
+        }
+        
+        const canvas = await html2canvas(resultsContainer, {
+            backgroundColor: '#F5F1E8',
+            scale: 2 // Higher quality
+        });
+        
+        // Convert to downloadable image
+        const link = document.createElement('a');
+        link.download = 'my-compass-results.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        
+        // Restore button
+        button.style.display = 'block';
+        button.textContent = 'Download Your Compass Card';
+        button.disabled = false;
+        
+    } catch (error) {
+        console.error('Download failed:', error);
+        button.style.display = 'block';
+        button.textContent = 'Download Failed - Try Screenshot';
+        button.disabled = false;
+    }
 });
