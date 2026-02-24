@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Compass - Circle 22</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Email Capture Landing Page -->
+    <div id="landing-page" class="page active">
+        <div class="container">
+            <div class="compass-logo">
+                <svg width="120" height="120" viewBox="0 0 120 120">
+                    <circle cx="60" cy="60" r="58" fill="none" stroke="#8B2E2E" stroke-width="2"/>
+                    <circle cx="60" cy="60" r="8" fill="#8B2E2E"/>
+                    <line x1="60" y1="10" x2="60" y2="35" stroke="#8B2E2E" stroke-width="2"/>
+                    <line x1="60" y1="85" x2="60" y2="110" stroke="#8B2E2E" stroke-width="2"/>
+                    <line x1="10" y1="60" x2="35" y2="60" stroke="#8B2E2E" stroke-width="2"/>
+                    <line x1="85" y1="60" x2="110" y2="60" stroke="#8B2E2E" stroke-width="2"/>
+                    <text x="60" y="20" text-anchor="middle" fill="#EFBF04" font-size="14" font-weight="bold">N</text>
+                    <text x="60" y="115" text-anchor="middle" fill="#EFBF04" font-size="14" font-weight="bold">S</text>
+                    <text x="20" y="65" text-anchor="middle" fill="#EFBF04" font-size="14" font-weight="bold">W</text>
+                    <text x="100" y="65" text-anchor="middle" fill="#EFBF04" font-size="14" font-weight="bold">E</text>
+                </svg>
+            </div>
+            <h1>The Compass</h1>
+            <p class="tagline">Discover your connection blueprint</p>
+            <p class="description">The Compass reveals your four core elements: how you show up, your energy and tempo, what draws you in, and how you hold connection.</p>
+            <p class="time-estimate">Time to complete: 8-10 minutes</p>
+            
+            <form id="email-form">
+                <input type="email" id="email-input" placeholder="Enter your email" required>
+                <button type="submit" class="btn-primary">Begin Your Compass</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Question Pages -->
+    <div id="question-page" class="page">
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="container">
+            <div class="question-number" id="question-number"></div>
+            <h2 class="question-text" id="question-text"></h2>
+            <div class="element-label" id="element-label"></div>
+            <div id="answers-container"></div>
+            <div class="navigation-buttons">
+                <button id="prev-btn" class="btn-secondary">Previous</button>
+                <button id="next-btn" class="btn-primary">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Page -->
+    <div id="results-page" class="page">
+        <div class="container">
+            <h1>Your Compass Results</h1>
+            <div class="compass-rose-container">
+                <canvas id="compass-canvas" width="300" height="300"></canvas>
+            </div>
+            
+            <div class="results-grid">
+                <div class="result-card">
+                    <h3>The Needle <span class="direction">(North)</span></h3>
+                    <p class="element-subtitle">How You Show Up</p>
+                    <div class="bar-container">
+                        <div class="bar" id="needle-bar"></div>
+                    </div>
+                    <p class="score-text" id="needle-score"></p>
+                </div>
+
+                <div class="result-card">
+                    <h3>The Rose <span class="direction">(East)</span></h3>
+                    <p class="element-subtitle">Energy & Tempo</p>
+                    <div class="bar-container">
+                        <div class="bar" id="rose-bar"></div>
+                    </div>
+                    <p class="score-text" id="rose-score"></p>
+                </div>
+
+                <div class="result-card">
+                    <h3>The Bearing <span class="direction">(South)</span></h3>
+                    <p class="element-subtitle">What Draws You In</p>
+                    <div class="bar-container">
+                        <div class="bar" id="bearing-bar"></div>
+                    </div>
+                    <p class="score-text" id="bearing-score"></p>
+                </div>
+
+                <div class="result-card">
+                    <h3>The Anchor <span class="direction">(West)</span></h3>
+                    <p class="element-subtitle">How You Hold Connection</p>
+                    <div class="bar-container">
+                        <div class="bar" id="anchor-bar"></div>
+                    </div>
+                    <p class="score-text" id="anchor-score"></p>
+                </div>
+            </div>
+
+            <div class="insights-section">
+                <h3>Your Compatibility Blueprint</h3>
+                <p id="insights-text"></p>
+            </div>
+
+            <button id="download-btn" class="btn-primary">Download Your Compass Card</button>
+            <p class="footer-text">circle22houston.com</p>
+        </div>
+    </div>
+
+    <script src="questions.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
