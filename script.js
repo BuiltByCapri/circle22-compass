@@ -168,8 +168,15 @@ function updateNextButton() {
          question.type === 'multiple' ? responses[question.id].length > 0 : 
          true);
     
+    // Disable Next button if no answer (except for open text questions)
+    if (question.type !== 'text') {
+        nextBtn.disabled = !hasAnswer;
+    } else {
+        nextBtn.disabled = false; // Allow skipping open text
+    }
+    
     if (currentQuestionIndex === questions.length - 1) {
-        nextBtn.textContent = hasAnswer ? 'See My Results' : 'Skip & See Results';
+        nextBtn.textContent = 'See My Results';
     } else {
         nextBtn.textContent = 'Next';
     }
