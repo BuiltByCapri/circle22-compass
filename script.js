@@ -224,7 +224,7 @@ function calculateElementScore(elementName) {
 
 // Send to Google Sheets
 async function sendToGoogleSheets(scores) {
-    const url = 'https://script.google.com/macros/s/AKfycbxBRyLd0K97SDBZlWdrDo5IFWc3uofwiOLeW5yCHcgyyg-rXWsbO4LodgbAKuFtpHzfTg/exec';
+    const url = 'https://script.google.com/macros/s/AKfycbylIay4e1oJCEwhi4wp3XjWLb25SXFWdr6Kr9YP4lAG9OvEuyA-wJFJWHUZ7ng21JlBvg/exec';
     
     const payload = {
         email: userEmail,
