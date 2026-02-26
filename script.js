@@ -210,7 +210,7 @@ function calculateResults() {
     
     // Send to Google Sheets
 async function sendToGoogleSheets(scores) {
-    const url = 'https://script.google.com/macros/s/AKfycbxBRyLd0K97SDBZlWdrDo5IFWc3uofwiOLeW5yCHcgyyg-rXWsbO4LodgbAKuFtpHzfTg/exec' // Replace with your actual URL
+    const url = 'https://script.google.com/macros/s/AKfycbxBRyLd0K97SDBZlWdrDo5IFWc3uofwiOLeW5yCHcgyyg-rXWsbO4LodgbAKuFtpHzfTg/exec'; // Replace with your actual URL
     
     const payload = {
         email: userEmail,
