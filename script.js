@@ -209,8 +209,22 @@ function calculateResults() {
     };
     
     // Send to Google Sheets
+    sendToGoogleSheets(scores);
+    
+    // Show results
+    showResults(scores);
+}
+
+// Calculate Element Score (simplified - returns random for demo)
+function calculateElementScore(elementName) {
+    // This is a placeholder - you'll implement actual scoring logic later
+    // For now, return a random score between 60-95
+    return Math.floor(Math.random() * 35) + 60;
+}
+
+// Send to Google Sheets
 async function sendToGoogleSheets(scores) {
-    const url = 'https://script.google.com/macros/s/AKfycbxBRyLd0K97SDBZlWdrDo5IFWc3uofwiOLeW5yCHcgyyg-rXWsbO4LodgbAKuFtpHzfTg/exec'; // Replace with your actual URL
+    const url = 'https://script.google.com/macros/s/AKfycbxBRyLd0K97SDBZlWdrDo5IFWc3uofwiOLeW5yCHcgyyg-rXWsbO4LodgbAKuFtpHzfTg/exec';
     
     const payload = {
         email: userEmail,
@@ -232,26 +246,6 @@ async function sendToGoogleSheets(scores) {
     } catch (error) {
         console.error('Error sending to Google Sheets:', error);
     }
-}
-    
-    // Show results
-    showResults(scores);
-}
-
-// Calculate Element Score (simplified - returns random for demo)
-function calculateElementScore(elementName) {
-    // This is a placeholder - you'll implement actual scoring logic later
-    // For now, return a random score between 60-95
-    return Math.floor(Math.random() * 35) + 60;
-}
-
-// Send to Google Sheets
-function sendToGoogleSheets(scores) {
-    // TODO: Implement Google Sheets integration
-    // For now, just log to console
-    console.log('Email:', userEmail);
-    console.log('Responses:', responses);
-    console.log('Scores:', scores);
 }
 
 // Show Results
